@@ -23,7 +23,7 @@ describe('tweet routes', () => {
   [x] `POST /api/v1/tweets` to create a new tweet
   [X]`GET /api/v1/tweets` to get all tweets
   [X]`GET /api/v1/tweets/:id` to get a tweet by ID
-  [ ]`PATCH /api/v1/tweets/:id` to update a tweets text **ONLY**
+  [X]`PATCH /api/v1/tweets/:id` to update a tweets text **ONLY**
   [ ]`DELETE /api/v1/tweets/:id` to delete a tweet 
   */
 
@@ -101,4 +101,22 @@ describe('tweet routes', () => {
         });
       });
   });
+});
+
+it('deletes a tweet', async() => {
+  const tweet = await Tweet.create({ 
+    handle: '@something', 
+    text: 'commentary about COVID-19' 
+  });
+
+  return request(app)
+    .delete(`/api/v1/tweets/${tweet._id}`)
+    .then(res => {
+      expect(res.body).toEqual({
+        _id: expect.any(String),
+        handle: '@something',
+        text: 'some dog joke',
+        __v: 0
+      });
+    });
 });
