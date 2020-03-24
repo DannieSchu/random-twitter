@@ -45,18 +45,10 @@ describe('tweet routes', () => {
   });
 
   it('gets all tweets', async() => {
-    const tweets = await Tweet.create([{
-      handle: '@something',
-      text: 'commentary about COVID-19'
-    },
-    {
-      handle: '@someotherhandle',
-      text: 'other commentary about COVID-19'
-    },
-    {
-      handle: '@caninelover',
-      text: 'dog pic'
-    }
+    const tweets = await Tweet.create([
+      { handle: '@something', text: 'commentary about COVID-19' },
+      { handle: '@someotherhandle', text: 'other commentary about COVID-19' },
+      { handle: '@caninelover', text: 'dog pic' }
     ]);
 
     return request(app)
@@ -64,6 +56,7 @@ describe('tweet routes', () => {
       .then(res => {
         tweets.forEach(tweet => {
           expect(res.body).toContainEqual({
+            __v: 0,
             _id: tweet._id.toString(),
             handle: tweet.handle,
             text: tweet.text
@@ -72,5 +65,3 @@ describe('tweet routes', () => {
       });
   });
 });
-
-
