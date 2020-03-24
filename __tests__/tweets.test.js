@@ -66,7 +66,10 @@ describe('tweet routes', () => {
   });
 
   it('gets a single tweet by its id', async() => {
-    const tweet = await Tweet.create({ handle: '@something', text: 'commentary about COVID-19' });
+    const tweet = await Tweet.create({ 
+      handle: '@something', 
+      text: 'commentary about COVID-19' 
+    });
 
     return request(app)
       .get(`/api/v1/tweets/${tweet._id}`)
@@ -81,13 +84,16 @@ describe('tweet routes', () => {
   });
 
   it('updates text in a tweet', async() => {
-    const tweet = await Tweet.create({ handle: '@something', text: 'commentary about COVID-19' });
+    const tweet = await Tweet.create({ 
+      handle: '@something', 
+      text: 'commentary about COVID-19' 
+    });
 
     return request(app)
       .patch(`/api/v1/tweets/${tweet._id}`)
       .send({ text: 'some dog joke' })
-      .then(tweet => {
-        expect(tweet).toEqual({
+      .then(res => {
+        expect(res.body).toEqual({
           _id: expect.any(String),
           handle: '@something',
           text: 'some dog joke',
