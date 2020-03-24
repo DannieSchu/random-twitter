@@ -44,6 +44,23 @@ describe('tweet routes', () => {
       });
   });
 
+  it('creates a random tweet', () => {
+    return request(app)
+      .post('/api/v1/tweets')
+      .send({
+        handle: '@secretswanson',
+        text: ''
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          handle: '@secretswanson',
+          text: expect.any(String),
+          __v: 0
+        });
+      });
+  });
+
   it('gets all tweets', async() => {
     const tweets = await Tweet.create([
       { handle: '@something', text: 'commentary about COVID-19' },
