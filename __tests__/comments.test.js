@@ -9,7 +9,7 @@ const Tweet = require('../lib/models/Tweet');
 
 /*
 [X]`POST /api/v1/comments` create a comment
-[ ]`GET /api/v1/comments/:id` get a comment by id and populate tweet
+[X]`GET /api/v1/comments/:id` get a comment by id and populate tweet
 [ ]`PATCH /api/v1/comments/:id` update a comment
 [ ]`DELETE /api/v1/comments/:id` delete a comment
 */
@@ -78,6 +78,25 @@ describe('comment routes', () => {
           },
           handle: '@commentcrazy',
           text: 'must respond to everything',
+          __v: 0
+        });
+      });
+  });
+
+  it('updates a comment', async() => {
+    const comment = await Comment.create({
+      handle: '@commentcrazy',
+      text: 'must respond to everything'
+    });
+    
+    return request(app)
+      .patch(`/api/v1/comment/${comment._id}`)
+      .send({ text: 'some dog joke' })
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          handle: '@commentcrazy',
+          text: 'some dog joke',
           __v: 0
         });
       });
