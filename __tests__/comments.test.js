@@ -107,4 +107,28 @@ describe('comment routes', () => {
         });
       });
   });
+
+  it('deletes a comment', async() => {
+    const tweet = await Tweet.create({ 
+      handle: '@something', 
+      text: 'commentary about COVID-19' 
+    });
+    const comment = await Comment.create({
+      tweetId: tweet.id,
+      handle: '@commentcrazy',
+      text: 'must respond to everything'
+    });
+
+    return request(app)
+      .delete(`/api/v1/comments/${comment._id}`)
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          tweetId: tweet.id,
+          handle: '@commentcrazy',
+          text: 'some dog joke',
+          __v: 0
+        });
+      });
+  });
 });
