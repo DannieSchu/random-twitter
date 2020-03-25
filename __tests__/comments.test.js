@@ -8,13 +8,13 @@ const Comment = require('../lib/models/Comment');
 const Tweet = require('../lib/models/Tweet');
 
 /*
-[ ]`POST /api/v1/comments` create a comment
+[X]`POST /api/v1/comments` create a comment
 [ ]`GET /api/v1/comments/:id` get a comment by id and populate tweet
 [ ]`PATCH /api/v1/comments/:id` update a comment
 [ ]`DELETE /api/v1/comments/:id` delete a comment
 */
 
-describe('tweet routes', () => {
+describe('comment routes', () => {
   beforeAll(() => {
     connect();
   });
@@ -35,7 +35,7 @@ describe('tweet routes', () => {
       })
       .then(tweet => {
         return request(app)
-          .post('/api/vi/comments')
+          .post('/api/v1/comments')
           .send({
             tweetId: tweet.id,
             handle: '@commentcrazy',
