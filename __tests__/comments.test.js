@@ -11,7 +11,7 @@ const Tweet = require('../lib/models/Tweet');
 [X]`POST /api/v1/comments` create a comment
 [X]`GET /api/v1/comments/:id` get a comment by id and populate tweet
 [X]`PATCH /api/v1/comments/:id` update a comment
-[ ]`DELETE /api/v1/comments/:id` delete a comment
+[X]`DELETE /api/v1/comments/:id` delete a comment
 */
 
 describe('comment routes', () => {
@@ -126,7 +126,7 @@ describe('comment routes', () => {
           _id: expect.any(String),
           tweetId: tweet.id,
           handle: '@commentcrazy',
-          text: 'some dog joke',
+          text: 'must respond to everything',
           __v: 0
         });
       });
