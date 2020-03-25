@@ -7,13 +7,6 @@ const mongoose = require('mongoose');
 const Comment = require('../lib/models/Comment');
 const Tweet = require('../lib/models/Tweet');
 
-/*
-[X]`POST /api/v1/comments` create a comment
-[X]`GET /api/v1/comments/:id` get a comment by id and populate tweet
-[X]`PATCH /api/v1/comments/:id` update a comment
-[X]`DELETE /api/v1/comments/:id` delete a comment
-*/
-
 describe('comment routes', () => {
   beforeAll(() => {
     connect();
@@ -64,7 +57,7 @@ describe('comment routes', () => {
       text: 'must respond to everything'
     });
 
-    // asked to populate in route so using whole tweet rather than just id
+    // asked to populate in route => insert whole tweet rather than just id
     return request(app)
       .get(`/api/v1/comments/${comment._id}`)
       .then(res => {

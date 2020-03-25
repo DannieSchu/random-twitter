@@ -19,14 +19,6 @@ describe('tweet routes', () => {
   afterAll(() => {
     return mongoose.connection.close();
   });
-  
-  /* 
-  [x] `POST /api/v1/tweets` to create a new tweet
-  [X]`GET /api/v1/tweets` to get all tweets
-  [X]`GET /api/v1/tweets/:id` to get a tweet by ID
-  [X]`PATCH /api/v1/tweets/:id` to update a tweets text **ONLY**
-  [X]`DELETE /api/v1/tweets/:id` to delete a tweet 
-  */
 
   it('creates a new tweet', () => {
     return request(app)
