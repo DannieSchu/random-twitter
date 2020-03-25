@@ -53,4 +53,33 @@ describe('comment routes', () => {
       });
   });
 
+  it('gets a single comment by its id', async() => {
+    const tweet = await Tweet.create({ 
+      handle: '@something', 
+      text: 'commentary about COVID-19' 
+    });
+    const comment = await Comment.create({
+      tweetId: tweet.id,
+      handle: '@commentcrazy',
+      text: 'must respond to everything'
+    });
+
+    // asked to populate in route so using whole tweet rather than just id
+    return request(app)
+      .get(`/api/v1/comments/${comment._id}`)
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          tweetId: {
+            _id: expect.any(String),
+            handle: '@something', 
+            text: 'commentary about COVID-19',
+            __v: 0 
+          },
+          handle: '@commentcrazy',
+          text: 'must respond to everything',
+          __v: 0
+        });
+      });
+  });
 });
