@@ -5,6 +5,7 @@ const app = require('../lib/app');
 const connect = require('../lib/utils/connect');
 const mongoose = require('mongoose');
 const Tweet = require('../lib/models/Tweet');
+const Comment = require('../lib/models/Comment');
 
 describe('tweet routes', () => {
   beforeAll(() => {
@@ -87,12 +88,32 @@ describe('tweet routes', () => {
       handle: '@something', 
       text: 'commentary about COVID-19' 
     });
+    await Comment.create([
+      {
+        tweetId: tweet.id,
+        handle: '@commentcrazy',
+        text: 'must respond to everything'
+      },
+      {
+        tweetId: tweet.id,
+        handle: '@someoneelse',
+        text: 'another comment'
+      },
+      {
+        tweetId: tweet.id,
+        handle: '@commentcrazy',
+        text: 'response to response'
+      }
+    ]);
 
     return request(app)
       .get(`/api/v1/tweets/${tweet._id}`)
       .then(res => {
+        // console.log(res.body.comments);
+        expect(res.body.comments).toHaveLength(3);
         expect(res.body).toEqual({
           _id: expect.any(String),
+          comments: expect.any(Array),
           handle: '@something',
           text: 'commentary about COVID-19',
           __v: 0
